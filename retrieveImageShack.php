@@ -1,5 +1,6 @@
 <?php
-//Script that downloads the Imageshack images of a page that are having the old URL format and put them in a Zip file
+// Script that downloads the Imageshack images of a page that are having the old URL format and put them in a Zip file
+// Doesnt work with all images, the ones that cannot be retreived this way will produce empty files on the Zip
 
 // Requires the ZipStream-PHP library from https://github.com/maennchen/ZipStream-PHP and PHP5.3+
 
@@ -10,7 +11,7 @@ $urlFilter = "/^https?:\/\/forums.audipassion.com\//";
 $prefixImageIndex = True;
 
 
-// ZipStream is used to directly create in memory the zip file without having to use a temporary file
+// ZipStream is used to directly create in memory the Zip file without having to use a temporary file
 require_once("ZipStream-PHP/src/ZipStream.php");
 
 $originPage = $originPageErr = "";
@@ -86,7 +87,7 @@ if(!empty($originPage) && empty($originPageErr)) {
 			// Retrieval of the image
 			$img = file_get_contents($imgUrl);
 
-			// Adding the image to the zip file
+			// Adding the image to the Zip file
 			$zip->addFile($fileName, $img);
 
 			unset($img);

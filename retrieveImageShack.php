@@ -7,7 +7,7 @@
 $urlFilter = "/^https?:\/\/forums.audipassion.com\//";
 
 // Adds to the images filename a prefix with its position in the page (eg. the 3rd image on the page will have the name 3-XXX.jpg)
-$prefixImageIndex = false;
+$prefixImageIndex = True;
 
 
 // ZipStream is used to directly create in memory the zip file without having to use a temporary file
@@ -48,10 +48,10 @@ echo "	<form method='post' action='".htmlspecialchars($_SERVER["PHP_SELF"])."'>
 if(!empty($originPage) && empty($originPageErr)) {
 	// A valid source page URL has been provided
 
-	// Retreival of the original page
+	// Retrieval of the original page
 	$html = file_get_contents($originPage);
 
-	// domDocument is used to easily parse the HTML code to retreive only <img> tags and extract their "src" value
+	// domDocument is used to easily parse the HTML code to retrieve only <img> tags and extract their "src" value
 	$dom = new domDocument;
 
 	// The @ is used to avoid warnings due to non standard HTML code
@@ -72,7 +72,7 @@ if(!empty($originPage) && empty($originPageErr)) {
 			// Only the images using the old Imageshack URLs are retrieved
 
 			// Creation of a new zipstream object if it hasnt been created yet
-			if(!isset($zip)) $zip = new ZipStream\ZipStream("imageShackRetriever_".time());
+			if(!isset($zip)) $zip = new ZipStream\ZipStream("imageShackRetriever_".time().".zip");
 
 			// Modification of the image URL from the olf format to the new one
 			$imgUrl = preg_replace("/^https?:\/\/img[0-9]+\.imageshack\.us\/img([0-9]+)\/[0-9]+\/(.+)$/", 'http://imageshack.com/download/\1/\2', $image->getAttribute("src"));

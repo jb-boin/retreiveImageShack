@@ -19,8 +19,8 @@ if(!empty($_POST["originPage"])) {
 	// An URL has been posted on the form, it needs to be cleaned and validated
 	$originPage = htmlspecialchars(stripslashes(trim($_POST["originPage"])));
 
-     // Check if the URL address syntax is valid (this regular expression also allows dashes in the URL)
-//     if (!preg_match("/\b(?:(?:https?|ftp):\/\/|www\.)[-a-z0-9+&@#\/%?=~_|!:,.;]*[-a-z0-9+&@#\/%=~_|]/i", $originPage)) {
+	// Check if the URL address syntax is valid (this regular expression also allows dashes in the URL)
+//	if (!preg_match("/\b(?:(?:https?|ftp):\/\/|www\.)[-a-z0-9+&@#\/%?=~_|!:,.;]*[-a-z0-9+&@#\/%=~_|]/i", $originPage)) {
 	if(!filter_var($originPage, FILTER_VALIDATE_URL) || !preg_match("/^https?:\/\//", $originPage)) {
 		// Only RFC valid URLs and using the HTTP/HTTPS protocol are accepted (no FTP or local files for example)
 		$originPageErr = "Invalid URL";

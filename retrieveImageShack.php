@@ -37,10 +37,10 @@ echo "<!DOCTYPE HTML>
 	<h2>Imageshack images retriever</h2>
 	<br />";
 
-if(!empty($urlFilter)) echo "URL Filter : $urlFilter<br /><br/>";
+if(!empty($urlFilter)) echo "URL Filter : $urlFilter<br /><br />";
 
 echo "	<form method='post' action='".htmlspecialchars($_SERVER["PHP_SELF"])."'>
-		Source page: <input type='text' name='originPage' value='$originPage'>
+		Source page: <input type='text' name='originPage' value='$originPage' style='width: 400px;'>
 		<input type='submit' name='submit' value='Submit'>
 		<span style='color: red;'>$originPageErr</span>
 	</form>";
@@ -68,14 +68,14 @@ if(!empty($originPage) && empty($originPageErr)) {
 	foreach ($images as $image) {
 		// Loop on each <img> tags of the page
 
-		if(preg_match("/^https?:\/\/img[0-9]+\.imageshack\.us\/img([0-9]+)/", $image->getAttribute("src"))) {
+		if(preg_match("/^https?:\/\/(img[0-9]+\.)?imageshack\.us\/([a-z]\/)?img([0-9]+)/", $image->getAttribute("src"))) {
 			// Only the images using the old Imageshack URLs are retrieved
 
 			// Creation of a new zipstream object if it hasnt been created yet
 			if(!isset($zip)) $zip = new ZipStream\ZipStream("imageShackRetriever_".time().".zip");
 
 			// Modification of the image URL from the olf format to the new one
-			$imgUrl = preg_replace("/^https?:\/\/img[0-9]+\.imageshack\.us\/img([0-9]+)\/[0-9]+\/(.+)$/", 'http://imageshack.com/download/\1/\2', $image->getAttribute("src"));
+			$imgUrl = preg_replace("/^https?:\/\/(img[0-9]+\.)?imageshack\.us\/([a-z]\/)?img([0-9]+)\/[0-9]+\/(.+)$/", 'http://imageshack.com/download/\3/\4', $image->getAttribute("src"));
 
 			// Replacement of all special characters on the filename by an underscore
 			$fileName = preg_replace("/[^a-z0-9\._-]/", "_", strtolower(basename($imgUrl)));
